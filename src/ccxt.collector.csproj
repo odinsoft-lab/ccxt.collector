@@ -26,7 +26,7 @@
         
         <!-- Package Settings -->
         <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
-        <PackageProjectUrl>https://github.com/ccxt-net/ccxt.collector</PackageProjectUrl>
+        <PackageProjectUrl>https://github.com/odinsoft-lab/ccxt.collector</PackageProjectUrl>
         <PackageIcon>ccxt.net.api.png</PackageIcon>
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageTags>cryptocurrency;exchange;trading;market-data;websocket;realtime;orderbook;ticker;trades;bot;crypto;exchange-markets</PackageTags>
@@ -41,7 +41,7 @@ No API signature changes; test and sample projects unaffected
 All targets (netstandard2.0, netstandard2.1, net8.0, net9.0) build and test successfully</PackageReleaseNotes>
         
         <!-- Repository Information -->
-        <RepositoryUrl>https://github.com/ccxt-net/ccxt.collector</RepositoryUrl>
+        <RepositoryUrl>https://github.com/odinsoft-lab/ccxt.collector</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PublishRepositoryUrl>true</PublishRepositoryUrl>
         
