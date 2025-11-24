@@ -92,7 +92,7 @@ Set up the repository and run local builds/tests.
 ```bash
 git clone https://github.com/YOUR_USERNAME/ccxt.collector.git
 cd ccxt.collector
-git remote add upstream https://github.com/ccxt-net/ccxt.collector.git
+git remote add upstream https://github.com/odinsoft-lab/ccxt.collector.git
 dotnet restore
 dotnet build
 dotnet test

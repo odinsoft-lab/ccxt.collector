@@ -258,18 +258,18 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 ## 🔗 Links
 
 - [NuGet Package](https://www.nuget.org/packages/CCXT.Collector)
-- [GitHub Repository](https://github.com/ccxt-net/ccxt.collector)
-- [Documentation Wiki](https://github.com/ccxt-net/ccxt.collector/wiki)
-- [Bug Reports](https://github.com/ccxt-net/ccxt.collector/issues)
+- [GitHub Repository](https://github.com/odinsoft-lab/ccxt.collector)
+- [Documentation Wiki](https://github.com/odinsoft-lab/ccxt.collector/wiki)
+- [Bug Reports](https://github.com/odinsoft-lab/ccxt.collector/issues)
 
 ## 👥 Related Projects
 
-- [CCXT.NET](https://github.com/ccxt-net/ccxt.net) - The base CCXT library for .NET
-- [CCXT.Simple](https://github.com/ccxt-net/ccxt.simple) - Simplified exchange interface
+- [CCXT.NET](https://github.com/odinsoft-lab/ccxt.net) - The base CCXT library for .NET
+- [CCXT.Simple](https://github.com/odinsoft-lab/ccxt.simple) - Simplified exchange interface
 
 ## 💬 Support
 
-- **Issues**: [GitHub Issues](https://github.com/ccxt-net/ccxt.collector/issues)
+- **Issues**: [GitHub Issues](https://github.com/odinsoft-lab/ccxt.collector/issues)
 - **Email**: support@ccxt.net
 - **Discord**: [Join our Discord](https://discord.gg/ccxt)
 
@@ -282,4 +282,4 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ---
 
-**Built with ❤️ by the ODINSOFT Team** | [⭐ Star us on GitHub](https://github.com/lisa3907/CCXT.Collector)
+**Built with ❤️ by the ODINSOFT Team** | [⭐ Star us on GitHub](https://github.com/odinsoft-lab/CCXT.Collector)
