@@ -262,7 +262,7 @@ Package contents (verify)
 
 - Sources from `src/`
 - README.md, LICENSE.md, package icon
-- Target frameworks (e.g., net8.0, net9.0 as configured)
+- Target frameworks (e.g., net8.0, net9.0, net10.0 as configured)
 - Correct dependencies
 
 Security notes for releases

@@ -66,8 +66,7 @@ CCXT.Collector is a .NET library that connects to cryptocurrency exchanges world
 dotnet build
 
 # Build specific target framework
-dotnet build -f net8.0
-dotnet build -f net9.0
+dotnet build -f net10.0
 
 # Build in Release mode
 dotnet build -c Release
