@@ -389,7 +389,7 @@ namespace CCXT.Collector.Upbit
             try
             {
                 var upbitCode = ConvertToUpbitCode(symbol);
-                
+
                 var subscription = new List<object>
                 {
                     new { ticket = Guid.NewGuid().ToString() },
@@ -397,7 +397,7 @@ namespace CCXT.Collector.Upbit
                 };
 
                 await SendMessageAsync(JsonSerializer.Serialize(subscription));
-                
+
                 MarkSubscriptionActive("ticker", symbol);
 
                 return true;
@@ -405,6 +405,37 @@ namespace CCXT.Collector.Upbit
             catch (Exception ex)
             {
                 RaiseError($"Subscribe ticker error: {ex.Message}");
+                return false;
+            }
+        }
+
+        public async Task<bool> SubscribeTickersAsync(IEnumerable<string> symbols)
+        {
+            try
+            {
+                var symbolList = symbols.ToList();
+                var upbitCodes = symbolList.Select(s => ConvertToUpbitCode(s)).ToArray();
+
+                var subscription = new List<object>
+                {
+                    new { ticket = Guid.NewGuid().ToString() },
+                    new { type = "ticker", codes = upbitCodes }
+                };
+
+                await SendMessageAsync(JsonSerializer.Serialize(subscription));
+
+                foreach (var symbol in symbolList)
+                {
+                    MarkSubscriptionActive("ticker", symbol);
+                }
+
+                RaiseError($"Subscribed to {upbitCodes.Length} ticker(s): {string.Join(", ", upbitCodes)}");
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                RaiseError($"Subscribe tickers error: {ex.Message}");
                 return false;
             }
         }
