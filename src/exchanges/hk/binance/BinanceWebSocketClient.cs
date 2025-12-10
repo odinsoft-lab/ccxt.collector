@@ -40,7 +40,9 @@ namespace CCXT.Collector.Binance
         public override string ExchangeName => "Binance";
         protected override string WebSocketUrl => "wss://stream.binance.com:9443/ws";
         protected override string PrivateWebSocketUrl => "wss://stream.binance.com:9443/ws";
-        protected override int PingIntervalMs => 180000; // 3 minutes
+        // Binance uses WebSocket protocol-level keepalive + server-initiated ping
+        // Client should respond to server's ping with pong, not send custom ping messages
+        protected override int PingIntervalMs => 0; // Disabled - rely on WebSocket KeepAlive and server ping/pong
 
         public BinanceWebSocketClient()
         {
@@ -54,6 +56,9 @@ namespace CCXT.Collector.Binance
             {
                 using var doc = JsonDocument.Parse(message);
                 var json = doc.RootElement;
+
+                // Note: Binance uses WebSocket protocol-level ping/pong frames (not JSON messages)
+                // .NET ClientWebSocket automatically responds to ping frames with pong frames
 
                 // Handle different message types
                 if (json.TryGetProperty("e", out var eProp))
@@ -394,7 +399,9 @@ namespace CCXT.Collector.Binance
 
         protected override string CreatePingMessage()
         {
-            return JsonSerializer.Serialize(new { ping = TimeExtension.UnixTime });
+            // Binance doesn't require client-initiated ping messages
+            // Server sends ping and client responds with pong (handled in ProcessMessageAsync)
+            return null;
         }
 
         protected override async Task ResubscribeAsync(SubscriptionInfo subscription)
