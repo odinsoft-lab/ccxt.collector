@@ -10,9 +10,9 @@
         <RootNamespace>CCXT.Collector</RootNamespace>
         
         <!-- Versioning -->
-        <Version>2.1.8</Version>
-        <AssemblyVersion>2.1.8.0</AssemblyVersion>
-        <FileVersion>2.1.8.0</FileVersion>
+        <Version>2.1.9</Version>
+        <AssemblyVersion>2.1.9.0</AssemblyVersion>
+        <FileVersion>2.1.9.0</FileVersion>
         
         <!-- Package Information -->
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -30,15 +30,14 @@
         <PackageIcon>ccxt.net.api.png</PackageIcon>
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageTags>cryptocurrency;exchange;trading;market-data;websocket;realtime;orderbook;ticker;trades;bot;crypto;exchange-markets</PackageTags>
-        <PackageReleaseNotes>v2.1.8 - Changed
-Added System.Collections.Immutable package to fully support ImmutableList and related extension methods on netstandard2.0
-Replaced netstandard2.0-incompatible APIs (Random.Shared, DateTimeOffset.UnixEpoch, C# 8 Index/Range, HashCode.Combine) with compatible alternatives
-Fixed
-Resolved build and runtime compatibility issues for netstandard2.0/2.1 targets
-Prevented platform-specific exceptions in string parsing and hash calculation logic
-Internal
-No API signature changes; test and sample projects unaffected
-All targets (netstandard2.0, netstandard2.1, net8.0, net9.0) build and test successfully</PackageReleaseNotes>
+        <PackageReleaseNotes>v2.1.9 - 2025-08-14
+Changed
+- GitHub organization changed from ccxt-net to odinsoft-lab
+- Reorganized samples project structure for better modularity
+- Split changelog into per-version files under docs/releases
+Documentation
+- Consolidated release notes into v2.md
+- Updated repository URLs and documentation structure</PackageReleaseNotes>
         
         <!-- Repository Information -->
         <RepositoryUrl>https://github.com/odinsoft-lab/ccxt.collector</RepositoryUrl>

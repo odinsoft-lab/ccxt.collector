@@ -1,5 +1,52 @@
-# CCXT.Collector NuGet Package Publisher
-# This script builds and publishes the CCXT.Collector package to NuGet.org
+<#
+.SYNOPSIS
+    Builds and publishes the CCXT.Collector NuGet package to NuGet.org.
+
+.DESCRIPTION
+    This script automates the complete NuGet package publishing workflow:
+    - Validates NuGet API key (from parameter or NUGET_API_KEY environment variable)
+    - Verifies .NET SDK installation
+    - Cleans previous package artifacts
+    - Builds the project in Release configuration
+    - Runs tests (optional)
+    - Creates NuGet package (.nupkg) and symbol package (.snupkg)
+    - Publishes to NuGet.org with user confirmation
+
+.PARAMETER ApiKey
+    NuGet API key for authentication. If not provided, the script will attempt
+    to use the NUGET_API_KEY environment variable.
+    Get your API key from: https://www.nuget.org/account/apikeys
+
+.PARAMETER SkipBuild
+    Skip the build step and use existing build artifacts.
+
+.PARAMETER SkipTests
+    Skip running tests before publishing.
+
+.PARAMETER DryRun
+    Perform all steps except actual publishing. Useful for verification.
+
+.EXAMPLE
+    .\scripts\publish-nuget.ps1 -ApiKey "your-api-key"
+    Builds, tests, and publishes the package using the provided API key.
+
+.EXAMPLE
+    .\scripts\publish-nuget.ps1 -DryRun
+    Performs a dry run without publishing (requires NUGET_API_KEY env variable).
+
+.EXAMPLE
+    .\scripts\publish-nuget.ps1 -SkipTests -SkipBuild
+    Publishes using existing build, skipping tests.
+
+.NOTES
+    File Name  : publish-nuget.ps1
+    Author     : ODINSOFT
+    Repository : https://github.com/odinsoft-lab/ccxt.collector
+    Requires   : .NET SDK 8.0 or later
+
+.LINK
+    https://www.nuget.org/packages/CCXT.Collector
+#>
 
 param(
     [Parameter(Mandatory=$false)]
@@ -43,7 +90,7 @@ if ([string]::IsNullOrEmpty($ApiKey)) {
         Write-Error "Error: NuGet API key not provided!"
         Write-Host ""
         Write-Host "Please provide API key using one of these methods:"
-        Write-Host "  1. Pass as parameter: .\publish-nuget.ps1 -ApiKey YOUR_KEY"
+        Write-Host "  1. Pass as parameter: .\scripts\publish-nuget.ps1 -ApiKey YOUR_KEY"
         Write-Host "  2. Set environment variable: `$env:NUGET_API_KEY = 'YOUR_KEY'"
         Write-Host ""
         Write-Host "Get your API key from: https://www.nuget.org/account/apikeys"
