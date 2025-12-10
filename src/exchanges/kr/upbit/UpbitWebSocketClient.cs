@@ -429,7 +429,7 @@ namespace CCXT.Collector.Upbit
                     MarkSubscriptionActive("ticker", symbol);
                 }
 
-                RaiseError($"Subscribed to {upbitCodes.Length} ticker(s): {string.Join(", ", upbitCodes)}");
+                RaiseInfo($"Subscribed to {upbitCodes.Length} ticker(s): {string.Join(", ", upbitCodes)}");
 
                 return true;
             }
@@ -537,14 +537,14 @@ namespace CCXT.Collector.Upbit
                     // Add subscription for this channel
                     subscriptionMessage.Add(new { type = upbitType, codes = symbols });
 
-                    RaiseError($"Added {upbitType} subscription for {symbols.Length} markets: {string.Join(", ", symbols.Take(3))}{(symbols.Length > 3 ? "..." : "")}");
+                    RaiseInfo($"Added {upbitType} subscription for {symbols.Length} markets: {string.Join(", ", symbols.Take(3))}{(symbols.Length > 3 ? "..." : "")}");
                 }
 
                 // IMPORTANT: Send ALL subscriptions in a SINGLE message
                 var json = JsonSerializer.Serialize(subscriptionMessage);
                 await SendMessageAsync(json);
                 
-                RaiseError($"Sent complete Upbit subscription message with {subscriptionMessage.Count} elements");
+                RaiseInfo($"Sent complete Upbit subscription message with {subscriptionMessage.Count} elements");
 
                 return true;
             }

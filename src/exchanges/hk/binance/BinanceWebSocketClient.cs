@@ -351,6 +351,8 @@ namespace CCXT.Collector.Binance
                 await SendMessageAsync(JsonSerializer.Serialize(subscription));
                 MarkSubscriptionActive("ticker", symbol);
 
+                RaiseInfo($"Subscribed to 1 ticker(s): {binanceSymbol}");
+
                 return true;
             }
             catch (Exception ex)
@@ -723,7 +725,7 @@ namespace CCXT.Collector.Binance
                     };
 
                     await SendMessageAsync(JsonSerializer.Serialize(subscriptionMessage));
-                    RaiseError($"Sent Binance batch subscription with {streamNames.Count} streams");
+                    RaiseInfo($"Sent Binance batch subscription with {streamNames.Count} streams");
                 }
                 else
                 {
@@ -745,7 +747,7 @@ namespace CCXT.Collector.Binance
                         };
 
                         await SendMessageAsync(JsonSerializer.Serialize(subscriptionMessage));
-                        RaiseError($"Sent Binance batch subscription {i + 1}/{messageCount} with {batch.Length} streams");
+                        RaiseInfo($"Sent Binance batch subscription {i + 1}/{messageCount} with {batch.Length} streams");
 
                         // Small delay between batches if multiple messages
                         if (i < messageCount - 1)
@@ -753,7 +755,7 @@ namespace CCXT.Collector.Binance
                     }
                 }
 
-                RaiseError($"Completed Binance batch subscription for {subscriptions.Count} total subscriptions");
+                RaiseInfo($"Completed Binance batch subscription for {subscriptions.Count} total subscriptions");
 
                 return true;
             }
