@@ -126,6 +126,7 @@ namespace CCXT.Collector.Core.Abstractions
         public event Action OnAuthenticated;
         public event Action OnDisconnected;
         public event Action<string> OnError;
+        public event Action<string> OnInfo; // For informational messages (non-error)
         public event Action OnPermanentFailure; // Fires when max reconnection attempts exceeded
 
         #endregion
@@ -788,6 +789,11 @@ namespace CCXT.Collector.Core.Abstractions
         protected virtual void RaiseError(string message)
         {
             OnError?.Invoke(message);
+        }
+
+        protected virtual void RaiseInfo(string message)
+        {
+            OnInfo?.Invoke(message);
         }
 
         protected virtual void RaiseConnected()

@@ -610,12 +610,6 @@ namespace CCXT.Collector.Kucoin
             base.Dispose();
         }
 
-        private void RaiseInfo(string message)
-        {
-            // Log info message - can be extended to use proper logging
-            RaiseError($"[INFO] {message}");
-        }
-
         protected void MarkSubscriptionInactive(string channel, string symbol, string extra = null)
         {
             try

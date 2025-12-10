@@ -168,6 +168,11 @@ namespace CCXT.Collector.Core.Abstractions
         /// </summary>
         event Action<string> OnError;
 
+        /// <summary>
+        /// Informational message callback (non-error)
+        /// </summary>
+        event Action<string> OnInfo;
+
         #endregion
     }
 

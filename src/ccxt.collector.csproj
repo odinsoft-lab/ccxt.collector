@@ -10,9 +10,9 @@
         <RootNamespace>CCXT.Collector</RootNamespace>
         
         <!-- Versioning -->
-        <Version>2.1.9</Version>
-        <AssemblyVersion>2.1.9.0</AssemblyVersion>
-        <FileVersion>2.1.9.0</FileVersion>
+        <Version>2.1.10</Version>
+        <AssemblyVersion>2.1.10.0</AssemblyVersion>
+        <FileVersion>2.1.10.0</FileVersion>
         
         <!-- Package Information -->
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -30,14 +30,10 @@
         <PackageIcon>ccxt.net.api.png</PackageIcon>
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageTags>cryptocurrency;exchange;trading;market-data;websocket;realtime;orderbook;ticker;trades;bot;crypto;exchange-markets</PackageTags>
-        <PackageReleaseNotes>v2.1.9 - 2025-08-14
-Changed
-- GitHub organization changed from ccxt-net to odinsoft-lab
-- Reorganized samples project structure for better modularity
-- Split changelog into per-version files under docs/releases
-Documentation
-- Consolidated release notes into v2.md
-- Updated repository URLs and documentation structure</PackageReleaseNotes>
+        <PackageReleaseNotes>v2.1.10 - 2025-12-11
+Fixed
+- Added subscription confirmation log for Binance SubscribeTickerAsync method
+- Binance now logs "Subscribed to 1 ticker(s): SYMBOL" like Upbit does</PackageReleaseNotes>
         
         <!-- Repository Information -->
         <RepositoryUrl>https://github.com/odinsoft-lab/ccxt.collector</RepositoryUrl>
