@@ -30,10 +30,18 @@
         <PackageIcon>ccxt.net.api.png</PackageIcon>
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageTags>cryptocurrency;exchange;trading;market-data;websocket;realtime;orderbook;ticker;trades;bot;crypto;exchange-markets</PackageTags>
-        <PackageReleaseNotes>v2.1.10 - 2025-12-11
+        <PackageReleaseNotes>v2.1.10 - 2025-12-15
+Added
+- Added OnInfo event to IWebSocketClient interface for informational logging
+- Added OnInfo event and RaiseInfo() method to WebSocketClientBase
+- Added RaiseInfo() logging to BinanceWebSocketClient.SubscribeTickerAsync()
+
+Changed
+- Changed info logs from RaiseError() to RaiseInfo() in Upbit/Binance exchanges
+- Removed duplicate RaiseInfo() method in Kucoin
+
 Fixed
-- Added subscription confirmation log for Binance SubscribeTickerAsync method
-- Binance now logs "Subscribed to 1 ticker(s): SYMBOL" like Upbit does</PackageReleaseNotes>
+- Fixed Binance WebSocket disconnection caused by custom ping message</PackageReleaseNotes>
         
         <!-- Repository Information -->
         <RepositoryUrl>https://github.com/odinsoft-lab/ccxt.collector</RepositoryUrl>
