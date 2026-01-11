@@ -37,7 +37,9 @@ Core components
 
 - IWebSocketClient: identity, connect/disconnect, subscribe methods, and event callbacks.
 - WebSocketClientBase: reconnection with exponential backoff; dynamic buffer; subscription tracking and restoration; thread-safe operations; optional batch subscriptions.
+- IChannelObserver: observability interface for metrics injection (ChannelStatistics, ConnectionHealth).
 - Unified models: SOrderBooks, STradeItem, STicker, SCandleItem, etc.
+- Dependency Injection: AddCcxtCollector() extension methods for service registration.
 
 ### Non-goals
 
@@ -54,7 +56,7 @@ We implement exchanges in the following order of priority:
 3. WebSocket support available or stable REST for core market data.
 4. Lower maintenance risk (clear docs, stable APIs, reasonable rate limits).
 
-Examples that typically score high: Binance, OKX, Bybit, Bitget, Kraken, Coinbase. Regional priorities may elevate local leaders.
+Examples that typically score high: Binance, OKX, Bybit, Bitget, Kraken, Coinbase, Bitfinex, Bitstamp. Regional priorities may elevate local leaders.
 
 ## Architecture and API contract
 
@@ -262,8 +264,8 @@ Package contents (verify)
 
 - Sources from `src/`
 - README.md, LICENSE.md, package icon
-- Target frameworks (e.g., net8.0, net9.0, net10.0 as configured)
-- Correct dependencies
+- Target frameworks: netstandard2.0, netstandard2.1, net8.0, net9.0, net10.0
+- Correct dependencies (Microsoft.Extensions.Configuration, System.Text.Json, etc.)
 
 Security notes for releases
 

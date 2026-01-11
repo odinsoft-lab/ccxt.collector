@@ -10,9 +10,9 @@
         <RootNamespace>CCXT.Collector</RootNamespace>
         
         <!-- Versioning -->
-        <Version>2.1.10</Version>
-        <AssemblyVersion>2.1.10.0</AssemblyVersion>
-        <FileVersion>2.1.10.0</FileVersion>
+        <Version>2.1.12</Version>
+        <AssemblyVersion>2.1.12.0</AssemblyVersion>
+        <FileVersion>2.1.12.0</FileVersion>
         
         <!-- Package Information -->
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -22,7 +22,7 @@
         <Company>ODINSOFT</Company>
         <Title>CryptoCurrency eXchange Data Collect</Title>
         <Description>CCXT.Collector – High-performance WebSocket-based cryptocurrency exchange data collection library for .NET. Supports real-time market data streaming from 132+ exchanges with unified data models.</Description>
-        <Copyright>Copyright OdinSoftware Co., Ltd. 2015~2025</Copyright>
+        <Copyright>Copyright OdinSoftware Co., Ltd. 2015~2026</Copyright>
         
         <!-- Package Settings -->
         <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
@@ -30,18 +30,23 @@
         <PackageIcon>ccxt.net.api.png</PackageIcon>
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageTags>cryptocurrency;exchange;trading;market-data;websocket;realtime;orderbook;ticker;trades;bot;crypto;exchange-markets</PackageTags>
-        <PackageReleaseNotes>v2.1.10 - 2025-12-15
+        <PackageReleaseNotes>v2.1.12 - 2026-01-12
 Added
-- Added OnInfo event to IWebSocketClient interface for informational logging
-- Added OnInfo event and RaiseInfo() method to WebSocketClientBase
-- Added RaiseInfo() logging to BinanceWebSocketClient.SubscribeTickerAsync()
+- Kraken Exchange: Full WebSocket API v2 support (wss://ws.kraken.com/v2)
+- Bitfinex Exchange: Full WebSocket API v2 support (channel ID-based routing)
+- Bitstamp Exchange: Full WebSocket API v2 support (wss://ws.bitstamp.net)
+- MEXC Exchange: Partial support (connection ready, requires protobuf for data)
+- Observability System: IChannelObserver, ChannelStatistics, ConnectionHealth
+- Dependency Injection: AddCcxtCollector() extension methods
+- Test Coverage: Increased from 154 to 439 tests (285% increase)
 
 Changed
-- Changed info logs from RaiseError() to RaiseInfo() in Upbit/Binance exchanges
-- Removed duplicate RaiseInfo() method in Kucoin
+- Verified all 16 active exchanges using current API versions
+- Bitget V2 API migration completed
 
 Fixed
-- Fixed Binance WebSocket disconnection caused by custom ping message</PackageReleaseNotes>
+- Resolved all build warnings (0 warnings, 0 errors)
+- Removed deprecated Bittrex test file (exchange closed Dec 2023)</PackageReleaseNotes>
         
         <!-- Repository Information -->
         <RepositoryUrl>https://github.com/odinsoft-lab/ccxt.collector</RepositoryUrl>

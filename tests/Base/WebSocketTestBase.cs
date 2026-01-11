@@ -19,7 +19,7 @@ namespace CCXT.Collector.Tests.Base
         protected readonly ITestOutputHelper _output;
         protected readonly List<string> _testSymbols;
         protected readonly int _connectionTimeout = 5000; // 5 seconds
-        protected readonly int _dataReceiveTimeout = 10000; // 10 seconds
+        protected int _dataReceiveTimeout = 10000; // 10 seconds (can be overridden)
         protected readonly Dictionary<string, int> _dataCounters;
         protected readonly string _exchangeName;
         private bool _disposed = false;

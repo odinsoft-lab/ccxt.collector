@@ -3,49 +3,54 @@
 ## Vision
 To become the most comprehensive and reliable real-time cryptocurrency data aggregation platform supporting all major exchanges globally with unified data models and advanced analytics capabilities.
 
-## Current Sprint Tasks (January 2025)
+## Current Sprint Tasks (January 2026)
 
-### ✅ Completed (v2.1.6 - January 2025)
+### ✅ Completed (v2.1.12 - January 2026)
+- [x] **New Exchange Implementations** - Added 3 new major exchanges
+  - [x] Kraken WebSocket API v2 (wss://ws.kraken.com/v2)
+  - [x] Bitfinex WebSocket API v2 (channel ID-based routing)
+  - [x] Bitstamp WebSocket API v2 (wss://ws.bitstamp.net)
+  - [~] MEXC partial (connection works, requires protobuf for data parsing)
+- [x] **Observability System** - Full metrics and health monitoring
+  - [x] IChannelObserver interface for metrics injection
+  - [x] ChannelStatistics class with message count, latency, bytes received
+  - [x] ConnectionHealth class with health status (Healthy/Degraded/Unhealthy)
+- [x] **Dependency Injection** - Microsoft.Extensions.DependencyInjection support
+  - [x] AddCcxtCollector() extension methods
+  - [x] ExchangeClientBuilder for fluent configuration
+- [x] **Test Coverage** - Increased from 154 to 439 tests (285% increase)
+- [x] **Bitget V2 API Migration** - Migrated from deprecated V1 to V2 WebSocket API
+
+### ✅ Previously Completed (v2.1.6 ~ v2.1.10)
 - [x] **Unified Subscription Handling** - Implemented `MarkSubscriptionActive` across all exchanges
 - [x] **Auto-Resubscription** - Added `RestoreActiveSubscriptionsAsync` for reconnection recovery
-- [x] **Test Coverage** - Achieved 100% test coverage for all 15 major exchanges
 - [x] **Channel Management** - Enhanced ChannelManager with batch subscription support
-
-### ✅ Previously Completed (v2.1.5 - January 2025)
-- [x] **Complete Exchange Implementations** - Finished 15 major exchanges
-  - [x] Gate.io WebSocket implementation with JSON protocol
-  - [x] Bittrex WebSocket implementation with SignalR protocol
-  - [x] Standardized data models across all exchanges
-- [x] **Production Stability** - Enhanced reconnection logic with exponential backoff
-- [x] **Build Error Resolution** - Fixed all model and method compatibility issues
 - [x] **JSON Migration** - Complete migration from Newtonsoft.Json to System.Text.Json
 - [x] **Performance Optimization** - 20-30% faster JSON parsing, 15-25% less memory usage
+- [x] **Error Resilience** - Implemented parse failure threshold (configurable via CCXT_MAX_MSG_FAILURES)
+- [x] **Memory Optimization** - Implemented ArrayPool<byte> for buffer management
 
-### 🔴 Critical Priority (Based on Code Analysis - August 12, 2025)
+### 🔴 Critical Priority (Based on Code Analysis - January 2026)
 - [ ] **Security Implementation** - URGENT: Implement secure credential management
   - [ ] Integrate with Azure Key Vault or similar secure storage
   - [ ] Remove plain text API key storage
   - [ ] Add input validation and sanitization
   - [ ] Implement authentication token refresh mechanism
 - [x] **Test Coverage Expansion** - ✅ Achieved 100% coverage for major exchanges
-  - [x] All 15 major exchanges now have comprehensive test suites
-  - [ ] Add tests for remaining 117 minor exchanges
+  - [x] All 16 major exchanges now have comprehensive test suites (439 tests)
+  - [ ] Add tests for remaining 116 minor exchanges
   - [ ] Implement integration tests with test fixtures
   - [ ] Add performance benchmark suite
   - [ ] Create mock/stub frameworks for unit testing
 
-### 🟠 High Priority  
-- [ ] **Error Resilience** - Implement parse failure threshold before reconnection
-- [ ] **Memory Optimization** - Implement ArrayPool<byte> for buffer management
-- [ ] **Connection Stability** - Add exponential backoff with jitter
-- [ ] **Observability** - Implement IChannelObserver pattern for metrics
+### 🟠 High Priority
+- [ ] **MEXC Full Support** - Add Google.Protobuf package for data parsing
 - [ ] **Performance Enhancements**
   - [ ] Parallelize batch subscriptions where supported
   - [ ] Add configurable grace period for idle disconnection
   - [ ] Implement in-memory caching with expiration
-- [ ] **Dependency Injection** - Implement Microsoft.Extensions.DependencyInjection
 - [ ] **Comprehensive Logging** - Integrate Serilog with structured logging
-- [ ] **Complete Remaining Exchanges** - Kraken, OKCoinKR, Probit implementations
+- [ ] **Complete Remaining Exchanges** - OKCoinKR, Probit implementations
 
 ### 🟡 Medium Priority
 - [ ] **Code Quality Improvements**
@@ -80,16 +85,18 @@ To become the most comprehensive and reliable real-time cryptocurrency data aggr
 #### Target Exchanges
 ##### International
 - [x] Coinbase (Completed in v2.1.3)
-- [ ] Kraken
-- [ ] Bitfinex
+- [x] Kraken (Completed in v2.1.12)
+- [x] Bitfinex (Completed in v2.1.12)
+- [x] Bitstamp (Completed in v2.1.12)
 - [x] OKX (Completed in v2.1.3)
 - [x] Bybit (Completed in v2.1.3)
 - [x] KuCoin (Completed in v2.1.3)
 - [x] Gate.io (Completed in v2.1.3)
 - [x] Huobi (Completed in v2.1.3)
+- [~] MEXC (Partial in v2.1.12, requires protobuf)
 - [ ] BitMEX
 - [ ] Deribit
-- [x] Bittrex (Completed in v2.1.3)
+- [x] ~~Bittrex~~ (Closed December 2023)
 - [x] Crypto.com (Completed in v2.1.3)
 - [x] Bitget (Completed in v2.1.3)
 
@@ -195,11 +202,13 @@ To become the most comprehensive and reliable real-time cryptocurrency data aggr
 ## Technology Stack Evolution
 
 ### Current Stack
-- **Language**: C# (.NET 8.0 / .NET 9.0)
+- **Language**: C# (.NET 8.0 / .NET 9.0 / .NET 10.0)
 - **WebSocket**: Native ClientWebSocket with enhanced base class
-- **Serialization**: Newtonsoft.Json, System.Text.Json
-- **Testing**: xUnit
-- **Exchanges**: 15 major exchanges fully implemented (Binance, Bitget, Bithumb, Bittrex, Bybit, Coinbase, Coinone, Crypto.com, Gate.io, Huobi, Korbit, Kucoin, OKX, Upbit)
+- **Serialization**: System.Text.Json (migrated from Newtonsoft.Json in v2.1.5)
+- **Testing**: xUnit (439 tests)
+- **Exchanges**: 16 major exchanges fully implemented (Binance, Bitfinex, Bitget, Bithumb, Bitstamp, Bybit, Coinbase, Coinone, Crypto.com, Gate.io, Huobi, Korbit, Kraken, Kucoin, OKX, Upbit)
+- **Observability**: IChannelObserver pattern for metrics and health monitoring
+- **DI**: Microsoft.Extensions.DependencyInjection support
 
 ### Planned Additions
 - **Message Queue**: Apache Kafka / Redis Streams
@@ -277,6 +286,12 @@ This roadmap represents our commitment to building a world-class real-time crypt
   - Completed 15 major exchange implementations
   - Gate.io and Bittrex fully implemented
   - Standardized data models across all exchanges
+- v1.2.0 - Updated with v2.1.12 completion status (January 2026)
+  - Added Kraken, Bitfinex, Bitstamp implementations
+  - Implemented observability system (IChannelObserver)
+  - Added dependency injection support
+  - Test coverage increased to 439 tests
+  - Bittrex marked as closed (December 2023)
 
 ---
 *This is a living document and will be updated quarterly to reflect progress and changing priorities.*

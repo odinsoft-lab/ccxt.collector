@@ -83,6 +83,10 @@ namespace CCXT.Collector.Core.Abstractions
         protected string _secretKey;
         protected bool _isAuthenticated = false;
 
+        // Observability
+        protected IChannelObserver _channelObserver;
+        protected DateTime? _connectedSince;
+
         public abstract string ExchangeName { get; }
         protected abstract string WebSocketUrl { get; }
         protected virtual string PrivateWebSocketUrl => WebSocketUrl; // Some exchanges use different URLs
@@ -141,6 +145,38 @@ namespace CCXT.Collector.Core.Abstractions
                 _maxReconnectAttempts = maxRec;
             if (int.TryParse(Environment.GetEnvironmentVariable("CCXT_MAX_MSG_FAILURES"), out var maxFail) && maxFail > 0)
                 _maxConsecutiveMessageFailures = maxFail;
+        }
+
+        /// <summary>
+        /// Set the channel observer for metrics collection
+        /// </summary>
+        /// <param name="observer">Channel observer instance</param>
+        public void SetChannelObserver(IChannelObserver observer)
+        {
+            _channelObserver = observer;
+        }
+
+        /// <summary>
+        /// Get the current channel observer
+        /// </summary>
+        public IChannelObserver ChannelObserver => _channelObserver;
+
+        /// <summary>
+        /// Get connection health information
+        /// </summary>
+        public ConnectionHealth GetConnectionHealth()
+        {
+            return new ConnectionHealth
+            {
+                ExchangeName = ExchangeName,
+                IsConnected = IsConnected,
+                IsAuthenticated = IsAuthenticated,
+                ReconnectAttempts = _reconnectAttempts,
+                TotalReconnects = _totalReconnects,
+                TotalMessageFailures = _totalMessageFailures,
+                ConnectedSince = _connectedSince,
+                ActiveSubscriptions = _subscriptions.Count(s => s.Value.IsActive)
+            };
         }
 
         /// <summary>
@@ -788,6 +824,7 @@ namespace CCXT.Collector.Core.Abstractions
         // Event raising helper methods for derived classes
         protected virtual void RaiseError(string message)
         {
+            _channelObserver?.OnError(ExchangeName, message);
             OnError?.Invoke(message);
         }
 
@@ -798,6 +835,8 @@ namespace CCXT.Collector.Core.Abstractions
 
         protected virtual void RaiseConnected()
         {
+            _connectedSince = DateTime.UtcNow;
+            _channelObserver?.OnConnectionStateChanged(ExchangeName, true);
             OnConnected?.Invoke();
         }
 
@@ -808,6 +847,7 @@ namespace CCXT.Collector.Core.Abstractions
 
         protected virtual void RaiseDisconnected()
         {
+            _channelObserver?.OnConnectionStateChanged(ExchangeName, false);
             OnDisconnected?.Invoke();
         }
 
@@ -838,6 +878,18 @@ namespace CCXT.Collector.Core.Abstractions
         }
 
         #endregion
+
+        /// <summary>
+        /// Record message metrics for observability
+        /// </summary>
+        /// <param name="channel">Channel name (ticker, orderbook, trades, etc.)</param>
+        /// <param name="symbol">Symbol</param>
+        /// <param name="messageSize">Message size in bytes</param>
+        /// <param name="processingTimeMs">Processing time in milliseconds</param>
+        protected void RecordMessageMetrics(string channel, string symbol, int messageSize, double processingTimeMs)
+        {
+            _channelObserver?.OnMessageReceived(ExchangeName, channel, symbol, messageSize, processingTimeMs);
+        }
 
         // Helper method to create a subscription key
         protected string CreateSubscriptionKey(string channel, string symbol)
@@ -984,6 +1036,9 @@ namespace CCXT.Collector.Core.Abstractions
                         SubscribedAt = DateTime.UtcNow
                     };
                 }
+
+                // Notify observer of subscription change
+                _channelObserver?.OnSubscriptionChanged(ExchangeName, channel, symbol, true);
             }
             catch (Exception ex)
             {

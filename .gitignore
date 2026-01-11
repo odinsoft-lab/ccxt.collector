@@ -270,6 +270,7 @@ nul
 appsettings.Development.json
 *.trx
 PROMPTS.txt
+coverage/
 
 # Allow documentation release notes to be tracked
 !docs/releases/

@@ -44,71 +44,69 @@ The library now includes automatic exchange status tracking to prevent connectio
 
 *Note: Exchange locations indicate registration/headquarters, not service availability
 
-#### Implementation Status (v2.1.7 - 2025-08-13)
+#### Implementation Status (v2.1.12 - 2026-01-12)
 
 | Feature | Implemented | In Progress | Planned |
 |---------|------------|-------------|----------|
 | WebSocket Clients | 132 | - | - |
 | Korean Exchange WebSockets | 6 (Upbit, Bithumb, Coinone, Korbit, Gopax, OKCoinKR) | 1 (Probit) | - |
-| Major Exchange Implementations | **15 (100% Complete)** | - | - |
-| Full WebSocket Implementation | **15** | - | 117 |
+| Major Exchange Implementations | **16 (100% Complete)** | 1 (MEXC partial) | - |
+| Full WebSocket Implementation | **16** | - | 116 |
 | Batch Subscription System | **11** | 4 | - |
-| Auto-Resubscription on Reconnect | **15** | - | 117 |
-| Authentication/Private Channels | - | 15 | - |
+| Auto-Resubscription on Reconnect | **16** | - | 116 |
+| Authentication/Private Channels | - | 16 | - |
 | Technical Indicators | 25+ | - | 25+ more |
-| Test Coverage | 15 exchanges (100% major) | - | 117 exchanges |
+| Test Coverage | 16 exchanges (439 tests) | - | 116 exchanges |
 
-#### ✅ All 15 Major Exchanges (100% Complete)
-Binance, Bitget, Bithumb, Bittrex, Bybit, Coinbase, Coinone, Crypto.com, Gate.io, Huobi, Korbit, Kucoin, OKX, Upbit - **All functional with standardized WebSocket streaming and batch subscription support**
+#### ✅ All 16 Major Exchanges (100% Complete)
+Binance, Bitfinex, Bitget, Bithumb, Bitstamp, Bybit, Coinbase, Coinone, Crypto.com, Gate.io, Huobi, Korbit, Kraken, Kucoin, OKX, Upbit - **All functional with standardized WebSocket streaming and batch subscription support**
+
+#### ⚠️ Closed Exchanges
+- ~~Bittrex~~ - Exchange closed December 2023
 
 #### 🔒 Security & Testing Status
 - **Critical**: Authentication implementation needed for private channels
-- **Testing**: All 15 major exchanges have unified WebSocket test suite
+- **Testing**: All 16 major exchanges have unified WebSocket test suite (439 tests)
 - **Channel Management**: Advanced ChannelManager with batch subscription support
-- **Security**: API key management system under development
+- **Observability**: IChannelObserver pattern for metrics and health monitoring
+- **Dependency Injection**: Microsoft.Extensions.DependencyInjection support
 
 ## 📦 Installation
 
 ### NuGet Package Manager
 ```bash
-Install-Package CCXT.Collector -Version 2.1.7
+Install-Package CCXT.Collector -Version 2.1.12
 ```
 
 ### .NET CLI
 ```bash
-dotnet add package CCXT.Collector --version 2.1.7
+dotnet add package CCXT.Collector --version 2.1.12
 ```
 
 ### Package Reference
 ```xml
-<PackageReference Include="CCXT.Collector" Version="2.1.7" />
+<PackageReference Include="CCXT.Collector" Version="2.1.12" />
 ```
 
-### ⚠️ Breaking Changes in v2.1.7
-- **Bitget WebSocket**: Fixed subscription format with correct instType ("sp" instead of "SPOT") and ping/pong protocol
-- **Crypto.com WebSocket**: Corrected message parsing and subscription handling
-- **Coinone WebSocket**: Fixed response_type handling and channel processing
-- **Coinbase WebSocket**: Changed to level2_batch channel for public access
-- **Sample Project**: Enhanced with comprehensive testing utilities and multi-exchange support
-- See [CHANGELOG](docs/releases/README.md#217---2025-08-13) for full details
+### ⚠️ What's New in v2.1.12
+- **New Exchanges**: Kraken, Bitfinex, Bitstamp fully implemented with WebSocket API v2
+- **MEXC Exchange**: Partial support (connection works, data parsing requires protobuf)
+- **Observability System**: IChannelObserver, ChannelStatistics, ConnectionHealth classes
+- **Dependency Injection**: AddCcxtCollector() extension methods for service registration
+- **Test Coverage**: Increased from 154 to 439 tests (285% increase)
+- **Bitget V2 API**: Migrated from deprecated V1 to V2 WebSocket API
+- See [CHANGELOG](docs/releases/v2.md) for full details
 
-### ⚠️ Breaking Changes in v2.1.6
-- **KuCoin WebSocket**: Complete rewrite with dynamic endpoint resolution and proper protocol handling
-- **Korbit WebSocket**: Migration to v2 API with array-based message format
-- See [CHANGELOG](docs/releases/README.md#216---2025-08-13) for full details
+### ⚠️ Breaking Changes in v2.1.11
+- **Bitget V2 API**: Changed WebSocket URL and subscription format
+- See [CHANGELOG](docs/releases/v2.md#2111---2026-01-12) for migration details
 
 ### ⚠️ Breaking Changes in v2.1.5
 - **IMPORTANT**: Complete migration from Newtonsoft.Json to System.Text.Json
 - All JSON processing now uses System.Text.Json for better performance and reduced dependencies
 - Added JsonExtensions utility class with safe property access methods
 - Unified subscription handling with `MarkSubscriptionActive` across all exchanges
-- See [CHANGELOG](docs/releases/README.md#215---2025-08-12) for migration details
-
-### ⚠️ Breaking Changes in v2.1.2
-- `SCandlestick.result` changed from single item to `List<SCandleItem>`
-- `OnOrderUpdate` event now uses `SOrders` container instead of single `SOrder`
-- `OnPositionUpdate` event now uses `SPositions` container instead of single `SPosition`
-- See migration notes in [Releases](docs/releases/README.md) for details
+- See [CHANGELOG](docs/releases/v2.md#215---2025-08-11) for migration details
 
 ## 🚀 Quick Start
 

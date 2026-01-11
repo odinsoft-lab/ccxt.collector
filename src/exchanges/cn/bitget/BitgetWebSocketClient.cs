@@ -13,11 +13,11 @@ namespace CCXT.Collector.Bitget
     /*
      * Bitget Support Markets: USDT, USDC, BTC, ETH, BGB
      *
-     * API Documentation:
+     * API Documentation (V2):
      *     https://www.bitget.com/api-doc/spot/websocket/intro
-     *     https://bitgetlimited.github.io/apidoc/en/spot/
+     *     https://www.bitget.com/api-doc/common/websocket-intro
      *
-     * WebSocket API:
+     * WebSocket API V2:
      * overview
      *     https://www.bitget.com/api-doc/common/websocket-intro
      * public
@@ -25,22 +25,26 @@ namespace CCXT.Collector.Bitget
      *     https://www.bitget.com/api-doc/spot/websocket/public/Candlesticks-Channel
      *     https://www.bitget.com/api-doc/spot/websocket/public/Trades-Channel
      *     https://www.bitget.com/api-doc/spot/websocket/public/Depth-Channel
-     *     https://www.bitget.com/api-doc/spot/websocket/public/Auction-Channel
      * private
-     *     https://www.bitget.com/api-doc/spot/websocket/private/Fill-Channel
-     *     https://www.bitget.com/api-doc/spot/websocket/private/Order-Channel
-     *     https://www.bitget.com/api-doc/spot/websocket/private/Plan-Order-Channel
      *     https://www.bitget.com/api-doc/spot/websocket/private/Account-Channel
+     *     https://www.bitget.com/api-doc/spot/websocket/private/Order-Channel
      *     https://www.bitget.com/api-doc/spot/websocket/private/Place-Order-Channel
-     *     https://www.bitget.com/api-doc/spot/websocket/private/Cancel-Order-Channel
      * error
      *     https://www.bitget.com/api-doc/spot/error-code/websocket
+     *
+     * V2 API Notes:
+     *     - V1 API (wss://ws.bitget.com/spot/v1/stream) is decommissioned
+     *     - V2 uses separate public/private WebSocket endpoints
+     *     - instType must be "SPOT" (uppercase) for spot trading
+     *     - Ping is plain string "ping", pong is "pong"
+     *     - Connection timeout: 2 minutes without ping
+     *     - Max 240 subscription requests/hour, 1000 channels/connection
      *
      * Fees:
      *     https://www.bitget.com/fee
      */
     /// <summary>
-    /// Bitget WebSocket client for real-time data streaming
+    /// Bitget WebSocket client for real-time data streaming (V2 API)
     /// </summary>
     public class BitgetWebSocketClient : WebSocketClientBase
     {
@@ -48,9 +52,13 @@ namespace CCXT.Collector.Bitget
         private readonly Dictionary<string, long> _lastUpdateIds;
 
         public override string ExchangeName => "Bitget";
-        protected override string WebSocketUrl => "wss://ws.bitget.com/spot/v1/stream";
-        protected override string PrivateWebSocketUrl => "wss://ws.bitget.com/spot/v1/stream";
-        protected override int PingIntervalMs => 30000; // 30 seconds
+
+        // V2 API WebSocket URLs
+        protected override string WebSocketUrl => "wss://ws.bitget.com/v2/ws/public";
+        protected override string PrivateWebSocketUrl => "wss://ws.bitget.com/v2/ws/private";
+
+        // V2 requires ping every 30 seconds (connection closes after 2 minutes without ping)
+        protected override int PingIntervalMs => 30000;
 
         public BitgetWebSocketClient()
         {
@@ -62,19 +70,27 @@ namespace CCXT.Collector.Bitget
         {
             try
             {
-                using var doc = JsonDocument.Parse(message);
-                var json = doc.RootElement;
-
-                // Handle ping/pong - Bitget uses "op" field
-                var op = json.GetStringOrDefault("op");
-                if (op == "ping")
+                // V2 API: Handle plain string ping/pong first
+                if (message == "pong")
                 {
-                    await HandlePingMessage(json);
+                    // Pong response received, connection is alive
                     return;
                 }
 
-                // Handle subscription responses
+                if (message == "ping")
+                {
+                    // Server sent ping, respond with pong
+                    await SendMessageAsync("pong");
+                    return;
+                }
+
+                using var doc = JsonDocument.Parse(message);
+                var json = doc.RootElement;
+
+                // V2 API: Check for "event" field in responses
                 var eventType = json.GetStringOrDefault("event");
+
+                // Handle subscription responses
                 if (eventType == "subscribe" || eventType == "subscription")
                 {
                     var code = json.GetStringOrDefault("code");
@@ -162,16 +178,6 @@ namespace CCXT.Collector.Bitget
             }
         }
 
-        private async Task HandlePingMessage(JsonElement json)
-        {
-            // Bitget expects pong response with "op" field
-            var pong = new
-            {
-                op = "pong",
-                ts = json.GetStringOrDefault("ts")
-            };
-            await SendMessageAsync(JsonSerializer.Serialize(pong));
-        }
 
         private async Task ProcessOrderbookData(JsonElement json)
         {
@@ -628,7 +634,7 @@ namespace CCXT.Collector.Bitget
                     {
                         new
                         {
-                            instType = "sp",
+                            instType = "SPOT",
                             channel = "books",
                             instId = instId  // Bitget expects BTCUSDT format (no slash, no suffix)
                         }
@@ -660,7 +666,7 @@ namespace CCXT.Collector.Bitget
                     {
                         new
                         {
-                            instType = "sp",
+                            instType = "SPOT",
                             channel = "trade",
                             instId = instId  // Bitget expects BTCUSDT format (no slash, no suffix)
                         }
@@ -692,7 +698,7 @@ namespace CCXT.Collector.Bitget
                     {
                         new
                         {
-                            instType = "sp",
+                            instType = "SPOT",
                             channel = "ticker",
                             instId = instId  // Bitget expects BTCUSDT format (no slash, no suffix)
                         }
@@ -726,7 +732,7 @@ namespace CCXT.Collector.Bitget
                     {
                         new
                         {
-                            instType = "sp",
+                            instType = "SPOT",
                             channel = $"candle{channelInterval}",
                             instId = instId  // Bitget expects BTCUSDT format (no slash, no suffix)
                         }
@@ -758,7 +764,7 @@ namespace CCXT.Collector.Bitget
                     {
                         new
                         {
-                            instType = "sp",
+                            instType = "SPOT",
                             channel = channel,
                             instId = instId  // Bitget expects BTCUSDT format (no slash, no suffix)
                         }
@@ -784,8 +790,8 @@ namespace CCXT.Collector.Bitget
 
         protected override string CreatePingMessage()
         {
-            // Bitget uses "ping" as the op field, not action
-            return JsonSerializer.Serialize(new { op = "ping" });
+            // V2 API: Bitget uses plain string "ping" instead of JSON object
+            return "ping";
         }
 
         protected override string CreateAuthenticationMessage(string apiKey, string secretKey)

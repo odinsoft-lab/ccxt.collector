@@ -4,7 +4,15 @@ This folder stores release notes of CCXT.Collector by version.
 
 ## Index
 
-- [v2.x Release Notes](./v2.md) - All v2.x releases (2.0.0 ~ 2.1.9)
+- [v2.x Release Notes](./v2.md) - All v2.x releases (2.0.0 ~ 2.1.12)
+
+## Latest Release: v2.1.12 (2026-01-12)
+
+### Highlights
+- **New Exchanges**: Kraken, Bitfinex, Bitstamp fully implemented
+- **Observability**: IChannelObserver pattern for metrics and health monitoring
+- **DI Support**: Microsoft.Extensions.DependencyInjection integration
+- **Test Coverage**: 439 tests (285% increase from v2.1.9)
 
 ## Authoring guidelines
 

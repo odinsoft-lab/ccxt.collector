@@ -46,6 +46,7 @@ namespace CCXT.Collector.Tests.Base
             {
                 // Global exchanges - use common pairs
                 ["Binance"] = new List<string> { "BTC/USDT", "ETH/USDT", "BNB/USDT" },
+                ["MEXC"] = new List<string> { "BTC/USDT", "ETH/USDT", "MX/USDT" },
                 ["Bybit"] = new List<string> { "BTC/USDT", "ETH/USDT", "SOL/USDT" },
                 ["OKX"] = new List<string> { "BTC/USDT", "ETH/USDT", "XRP/USDT" },
                 ["Bitget"] = new List<string> { "BTC/USDT", "ETH/USDT", "SOL/USDT" },
@@ -56,8 +57,13 @@ namespace CCXT.Collector.Tests.Base
                 
                 // US exchanges
                 ["Coinbase"] = new List<string> { "BTC/USD", "ETH/USD", "SOL/USD" },
+                ["Kraken"] = new List<string> { "BTC/USD", "ETH/USD", "XRP/USD" },
                 ["Bittrex"] = new List<string> { "BTC/USDT", "ETH/USDT", "ADA/USDT" },
-                
+
+                // GB (UK) exchanges
+                ["Bitfinex"] = new List<string> { "BTC/USD", "ETH/USD", "XRP/USD" },
+                ["Bitstamp"] = new List<string> { "BTC/USD", "ETH/USD", "XRP/USD" },
+
                 // Korean exchanges - use KRW pairs
                 ["Upbit"] = new List<string> { "BTC/KRW", "ETH/KRW", "XRP/KRW" },
                 ["Bithumb"] = new List<string> { "BTC/KRW", "ETH/KRW", "XRP/KRW" },

@@ -2,15 +2,17 @@
 
 This document tracks the implementation status by region compared to ccxt/ccxt C# exchanges.
 
-Legend: FULL = implemented in this repo, TODO = not implemented yet.
+Legend: FULL = implemented in this repo, TODO = not implemented yet, CLOSED = exchange shut down.
+
+*Last Updated: 2026-01-12*
 
 ## CN (China / HK based)
 - binance: FULL
 - bigone: TODO
 - bingx: TODO
 - bitforex: TODO
-- bitget: TODO
-- bybit: TODO
+- bitget: FULL
+- bybit: FULL
 - coinex: TODO
 - digifinex: TODO
 - gate: TODO
@@ -19,10 +21,10 @@ Legend: FULL = implemented in this repo, TODO = not implemented yet.
 - hitbtc: TODO
 - htx: TODO
 - huobi: FULL
-- kucoin: TODO
+- kucoin: FULL
 - kucoinfutures: TODO
 - lbank: TODO
-- mexc: TODO
+- mexc: PARTIAL (requires protobuf support - connection works, data parsing pending)
 - okx: FULL
 - woo: TODO
 - woofipro: TODO
@@ -36,7 +38,7 @@ Legend: FULL = implemented in this repo, TODO = not implemented yet.
 - binancecoinm: TODO
 - binanceus: TODO
 - binanceusdm: TODO
-- bittrex: FULL
+- bittrex: CLOSED (December 2023)
 - coinbase: FULL
 - coinbaseadvanced: TODO
 - coinbaseexchange: TODO
@@ -46,7 +48,7 @@ Legend: FULL = implemented in this repo, TODO = not implemented yet.
 - gdax: TODO
 - gemini: TODO
 - itbit: TODO
-- kraken: TODO
+- kraken: FULL
 - krakenfutures: TODO
 - okcoin: TODO
 - okxus: TODO
@@ -65,8 +67,8 @@ Legend: FULL = implemented in this repo, TODO = not implemented yet.
 - upbit: FULL
 
 ## GB (United Kingdom)
-- bitfinex: TODO
-- bitstamp: TODO
+- bitfinex: FULL
+- bitstamp: FULL
 - bitteam: TODO
 - blockchaincom: TODO
 - cexio: TODO
