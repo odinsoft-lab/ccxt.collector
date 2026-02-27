@@ -1,0 +1,35 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Folder Name="/docs/">
+    <File Path="docs/CHANGELOG.md" />
+    <File Path="docs/CONTRIBUTING.md" />
+    <File Path="docs/ROADMAP.md" />
+  </Folder>
+  <Folder Name="/docs/logo-files/">
+    <File Path="logo-files/ccxt.net.api.png" />
+    <File Path="logo-files/ccxt.net.ico" />
+  </Folder>
+  <Folder Name="/samples/">
+    <Project Path="samples/ccxt.samples.csproj" />
+  </Folder>
+  <Folder Name="/scripts/">
+    <File Path="scripts/publish-nuget.ps1" />
+    <File Path="scripts/unlist-nuget.ps1" />
+  </Folder>
+  <Folder Name="/Solution Items/">
+    <File Path=".gitattributes" />
+    <File Path=".gitignore" />
+    <File Path="LICENSE.md" />
+    <File Path="README.md" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src/ccxt.collector.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/ccxt.tests.csproj" />
+  </Folder>
+</Solution>
